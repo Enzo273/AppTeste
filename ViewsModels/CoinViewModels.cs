@@ -18,6 +18,7 @@ namespace AppTeste.ViewsModels
         {
             Coin coin = new Coin();
             _resultado = coin.Jogar(_ladoEscolhido);
+            // lol
         }
 
     }
