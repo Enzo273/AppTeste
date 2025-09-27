@@ -26,7 +26,8 @@ namespace AppTeste.Models
             int ladoSorteado = new Random().Next(2);
             Lado = (ladoSorteado == 0) ? "Cara" : "Coroa";
 
-            string resultado = (Lado == ladoEscolhido) ? $"Parabéns, você pediu {ladoEscolhido} e deu {Lado}" :
+            string resultado = (Lado == ladoEscolhido) ? 
+                $"Parabéns, você pediu {ladoEscolhido} e deu {Lado}" :
                 $"Que pena, você pediu {ladoEscolhido} e deu {Lado}";
             return resultado;
         }
