@@ -14,6 +14,7 @@ namespace AppTeste.ViewsModels
         //ctor + TAB
         public CoinViewModels()
         {
+            Application.Current.MainPage.DisplayAlert("Mensagem", "Bem-vindo(a) ao COIN FLIP", "Ok");
             FlipCommand = new Command(Flip);
         }
 
@@ -34,20 +35,42 @@ namespace AppTeste.ViewsModels
         {
             try
             {
-                await Application.Current.MainPage.DisplayAlert("Mensagem", "Bem-vindo(a) ao COIN FLIP", "Ok");
                 if (string.IsNullOrEmpty(_ladoEscolhido)) {
                     throw new Exception("Selecione o lado da moeda");
                 }
 
                 string nome = await Application.Current.MainPage.DisplayPromptAsync("Identificação", "Digite seu nome");
 
+                string diaSemana = 
+                await Application.Current.MainPage.DisplayActionSheet("Dia da semana", "Cancelar", "Ok", 
+                "Domingo", 
+                "Segunda", 
+                "Terça", 
+                "Quarta",
+                "Quinta", 
+                "Sexta", 
+                "Sábado");
+
                 Coin coin = new Coin();
                 _resultado = coin.Jogar(_ladoEscolhido);
                 _imagem = $"{coin.Lado}.png";
 
+                _resultado = $"{nome}, hoje é: {diaSemana}, {_resultado}";
 
                 OnPropertyChanged(nameof(Resultado));
                 OnPropertyChanged(nameof(Imagem));
+
+                bool retorno = await Application.Current.MainPage.DisplayAlert("Pergunta", "Deseja reiniciar o jogo?", "Sim", "Não");
+            
+                if (retorno)
+                {
+                    _resultado = string.Empty;
+                    _imagem = string.Empty;
+
+                    OnPropertyChanged(nameof(Resultado));
+                    OnPropertyChanged(nameof(Imagem));
+                }
+                
             }
             catch (Exception ex)
             {
