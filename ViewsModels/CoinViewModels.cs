@@ -35,6 +35,7 @@ namespace AppTeste.ViewsModels
             _resultado = coin.Jogar(_ladoEscolhido);
             _imagem = $"{coin.Lado}.png";
             
+            
             OnPropertyChanged(nameof(Resultado));
             OnPropertyChanged(nameof(Imagem));
 
