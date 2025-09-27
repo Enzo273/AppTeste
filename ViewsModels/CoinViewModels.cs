@@ -27,17 +27,32 @@ namespace AppTeste.ViewsModels
         public string _imagem = string.Empty;
 
         [ObservableProperty]
-        public string _resultado = string.Empty;    
+        public string _resultado = string.Empty;
 
-        public void Flip()
+        
+        public async void Flip()
         {
-            Coin coin = new Coin();
-            _resultado = coin.Jogar(_ladoEscolhido);
-            _imagem = $"{coin.Lado}.png";
-            // lol
-            
-            OnPropertyChanged(nameof(Resultado));
-            OnPropertyChanged(nameof(Imagem));
+            try
+            {
+                await Application.Current.MainPage.DisplayAlert("Mensagem", "Bem-vindo(a) ao COIN FLIP", "Ok");
+                if (string.IsNullOrEmpty(_ladoEscolhido)) {
+                    throw new Exception("Selecione o lado da moeda");
+                }
+
+                string nome = await Application.Current.MainPage.DisplayPromptAsync("Identificação", "Digite seu nome");
+
+                Coin coin = new Coin();
+                _resultado = coin.Jogar(_ladoEscolhido);
+                _imagem = $"{coin.Lado}.png";
+
+
+                OnPropertyChanged(nameof(Resultado));
+                OnPropertyChanged(nameof(Imagem));
+            }
+            catch (Exception ex)
+            {
+                await Application.Current.MainPage.DisplayAlert("Mensagem", ex.Message, "Ok");
+            }
 
         }
 
